@@ -75,8 +75,8 @@ module lab6b
 	 
 endmodule
 
-module control(clock, resetn, done, key, goNextState, wins;);
-	input clock, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
+module control(clock, resetn, done, key, goNextState, wins);
+	input clock, enable, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
 	input [7:0] key;
 	reg [4:0] cur_state, nxt_state;
 
@@ -85,20 +85,21 @@ module control(clock, resetn, done, key, goNextState, wins;);
       LOAD_NUM = 5'd1,
 			LOAD_NUM_WAIT = 5'd2,
 			LOAD_WORD = 5'd3,
-      LOAD_WORD_DRAW: 5'd4,
+      LOAD_WORD_DRAW = 5'd4,
 			LOAD_WORD_WAIT = 5'd5,
       SETUP = 5'd6,
       SETUP_WAIT = 5'd7,
       GUESS_LETTER = 5'd8,
       GUESS_LETTER_WAIT = 5'd9,
       CHECK_LETTER = 5'd10,
+      CHECK_LETTER_DRAW = 5'd10,
       CHECK_LETTER_WAIT = 5'd11,
       CHECK_WORD_DRAW = 5'd12,
       CHECK_VICTORY = 5'd13,
       VICTORY = 5'd15,
       VICTORY_WAIT = 5'd16,
       DEATH = 5'd17,
-      DEATH_WAIT = 5'd18
+      DEATH_WAIT = 5'd18;
 	always @(*)
 	begin: state_table // next state logic
 		case (cur_state)
@@ -111,9 +112,9 @@ module control(clock, resetn, done, key, goNextState, wins;);
         end
 			LOAD_WORD_WAIT: begin
           if(key == 8'h00)
-            nxt_state <= LOAD_NUM_WORD;
+            nxt_state <= LOAD_WORD_DRAW;
           else
-            nxt_state <= LOAD_NUM_WAIT;
+            nxt_state <= LOAD_WORD_WAIT;
         end
       LOAD_WORD_DRAW: begin
           if(done && goNextState) // done drawing
@@ -140,55 +141,43 @@ module control(clock, resetn, done, key, goNextState, wins;);
       CHECK_LETTER: nxt_state = done ? CHECK_LETTER_DRAW : CHECK_LETTER;
       CHECK_LETTER_DRAW: begin
           if(done && goNextState) // done drawing
-            if(wins){
+            if(wins)
               nxt_state <= VICTORY;
-            }else{
+            else
               nxt_state <= DEATH;
-            }
+            
           else if(done) 
             nxt_state <= LOAD_WORD;
           else
             nxt_state <= LOAD_WORD_DRAW;
         end
       VICTORY: nxt_state = done ? VICTORY_WAIT : VICTORY;
-      VICTORY_WAIT: nxt_state = done ? S_CYCLE_0 : VICTORY;
+      VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
       DEATH: nxt_state = done ? DEATH_WAIT : DEATH;
-      DEATH_WAIT: nxt_state = done ? S_CYCLE_0 : DEATH;
-			default: nxt_state = LOADX;
+      DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
+			default: nxt_state = DRAW_INIT;
 		endcase
 	end
 	
 	always @(*)
 	begin: enable_signals // datapath control signals
-		ld_x = 1'b0;
-		ld_y = 1'b0;
-		ld_c = 1'b0;
 		enable = 1'b0;
-		plot = 1'b0;
 		
 		case (cur_state)
 			DRAW_INIT: begin
 				
 			end
       LOAD_NUM: begin
-				ld_c = 1'b1;
 				enable = 1'b1;
-				plot = 1'b1;
 			end
 			LOAD_NUM_WAIT: begin
-				ld_c = 1'b1;
 				enable = 1'b1;
-				plot = 1'b1;
 			end
 			LOAD_WORD: begin
-				ld_c = 1'b1;
 				enable = 1'b1;
-				plot = 1'b1;
 			end
 			LOAD_WORD_WAIT: begin
-				ld_c = 1'b1;
 				enable = 1'b1;
-				plot = 1'b1;
 			end
       SETUP: begin
 				ld_c = 1'b1;
