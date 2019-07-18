@@ -68,51 +68,16 @@ module lab6b
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
-    wire done, enable, ld_x, ld_y, ld_c;
-    // Instantiate datapath
-    datapath d0(SW[6:0], CLOCK_50, resetn, enable, ld_x, ld_y, ld_c, SW[9:7], colour, x, y, done);
+    wire done, enable;
+    
     // Instantiate FSM control
 	  control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable, ld_x, ld_y, ld_c, writeEn);
 	 
 endmodule
 
-module datapath(data_in, clock, resetn, enable, ld_x, ld_y, ld_c, col_in, col_out, X, Y, done);
-	input resetn, enable, ld_x, ld_y, ld_c, clock;
-	input [6:0] data_in;
-	input [2:0] col_in;
-	output done;
-	output [6:0] X, Y;
-	output [2:0] col_out;
-	reg [6:0] x1, y1, c1;
-	wire [3:0] q1;
-	//wire q1out;
-	
-	
-	always @(posedge clock) begin
-		if (!resetn) begin
-			x1 <= 7'b0;
-			y1 <= 7'b0;
-			c1 <= 2'b0;
-		end
-		else begin
-			if (ld_x)
-				x1 <= {1'b0, data_in};
-			if (ld_y)
-				y1 <= data_in;
-			if (ld_c)
-				c1 <= col_in;
-		end
-	end
-	
-	sync_counter s1(enable, clock, resetn, 1'b1, q1);
-	
-	assign col_out = c1;
-	assign done = (q1 == 4'b1111) ? 1 : 0;
-endmodule
-
-module control(clock, key, goNextState,go, done, enable);
-	input clock, resetn, go, fill, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
-	output reg enable, ld_x, ld_y, ld_c, plot;
+module control(clock, resetn, done, key, goNextState, wins;);
+	input clock, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
+	input [7:0] key;
 	reg [4:0] cur_state, nxt_state;
 
 	
@@ -137,65 +102,53 @@ module control(clock, key, goNextState,go, done, enable);
 	always @(*)
 	begin: state_table // next state logic
 		case (cur_state)
-      DRAW_INIT: nxt_state = done ? LOADX : S_CYCLE_0;
-			LOAD_NUM: begin
-          if(key == 8'h0A)
-            nxt_state = LOAD_NUM_WAIT;
-          else
-            nxt_state = LOAD_NUM;
-        end 
-			LOAD_NUM_WAIT: begin
-          if(key == 8'h00)
-            nxt_state = LOAD_NUM_WORD;
-          else
-            nxt_state = LOAD_NUM_WAIT;
-        end
+      DRAW_INIT: nxt_state = done ? LOAD_WORD : DRAW_INIT;
 			LOAD_WORD: begin
           if(key == 8'h0A)
-            nxt_state = LOAD_WORD_WAIT;
+            nxt_state <= LOAD_WORD_WAIT;
           else
-            nxt_state = LOAD_WORD;
+            nxt_state <= LOAD_WORD;
         end
 			LOAD_WORD_WAIT: begin
           if(key == 8'h00)
-            nxt_state = LOAD_NUM_WORD;
+            nxt_state <= LOAD_NUM_WORD;
           else
-            nxt_state = LOAD_NUM_WAIT;
+            nxt_state <= LOAD_NUM_WAIT;
         end
       LOAD_WORD_DRAW: begin
           if(done && goNextState) // done drawing
-            nxt_state = LOAD_WORD_DRAW;
+            nxt_state <= LOAD_WORD_DRAW;
           else if(done) 
-            nxt_state = LOAD_WORD;
+            nxt_state <= LOAD_WORD;
           else
-            nxt_state = LOAD_WORD_DRAW;
+            nxt_state <= LOAD_WORD_DRAW;
         end
       SETUP:  nxt_state = done ? SETUP_WAIT : SETUP;
       SETUP_WAIT: nxt_state = done ? GUESS_LETTER : SETUP_WAIT;
       GUESS_LETTER: begin
           if(key != 8'h00 ) // done drawing
-            nxt_state = GUESS_LETTER_WAIT;
+            nxt_state <= GUESS_LETTER_WAIT;
           else 
-            nxt_state = GUESS_LETTER;
+            nxt_state <= GUESS_LETTER;
         end
       GUESS_LETTER_WAIT: begin
           if(key == 8'h00)
-            nxt_state = CHECK_LETTER;
+            nxt_state <= CHECK_LETTER;
           else
-            nxt_state = GUESS_LETTER;
+            nxt_state <= GUESS_LETTER;
         end
-      CHECK_LETTER: nxt_state = done ? S_CYCLE_0 : SETUP;
+      CHECK_LETTER: nxt_state = done ? CHECK_LETTER_DRAW : CHECK_LETTER;
       CHECK_LETTER_DRAW: begin
           if(done && goNextState) // done drawing
             if(wins){
-              nxt_state = VICTORY;
+              nxt_state <= VICTORY;
             }else{
-              nxt_state = DEATH;
+              nxt_state <= DEATH;
             }
           else if(done) 
-            nxt_state = LOAD_WORD;
+            nxt_state <= LOAD_WORD;
           else
-            nxt_state = LOAD_WORD_DRAW;
+            nxt_state <= LOAD_WORD_DRAW;
         end
       VICTORY: nxt_state = done ? VICTORY_WAIT : VICTORY;
       VICTORY_WAIT: nxt_state = done ? S_CYCLE_0 : VICTORY;
@@ -307,25 +260,5 @@ module control(clock, key, goNextState,go, done, enable);
 			cur_state = S_CYCLE_0;
 		else
 			cur_state = nxt_state;
-	end
-endmodule
-
-module sync_counter(enable, clock, reset_n, inc, q, debug);
-	input enable, clock, reset_n, inc;
-	input [3:0] startb, endb;
-	output reg [3:0] q;
-	
-	output [3:0] debug;
-	assign debug = q;
-	
-	always @(posedge clock)
-	begin
-		if (reset_n == 1'b0)
-			q <= startb;
-		else if (enable == 1'b1)
-			if (q == 4'b1111)
-				q <= 4'b0000;
-			else
-				q <= q + inc;
 	end
 endmodule
