@@ -1,6 +1,6 @@
 // Part 2 skeleton
 
-module lab6b
+module Hangman
 	(
 		CLOCK_50,						//	On Board 50 MHz
 		// Your inputs and outputs here
@@ -68,31 +68,40 @@ module lab6b
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
-    wire done, enable;
+    wire done, enable, letter_found, load;
+
+    wire [7:0] key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0;
+    wire [9:0] checkModOut;
+    wire [3:0] counter;
     
+
+    load ld(CLOCK_50, load, counter, key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0);
+    check_module cm(key,l1, l2,l3,l4,l5,l6,l7,l8,l9,l0, letter_found, checkModOut);
+
     // Instantiate FSM control
-	  control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable, ld_x, ld_y, ld_c, writeEn);
+	  control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
 	 
 endmodule
 
 module control(clock, resetn, done, key, goNextState, wins);
-	input clock, enable, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
+	input clock, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
 	input [7:0] key;
+	//input reg enable;
 	reg [4:0] cur_state, nxt_state;
 
 	
   localparam  DRAW_INIT = 5'd0,
       LOAD_NUM = 5'd1,
-			LOAD_NUM_WAIT = 5'd2,
-			LOAD_WORD = 5'd3,
+		LOAD_NUM_WAIT = 5'd2,
+		LOAD_WORD = 5'd3,
       LOAD_WORD_DRAW = 5'd4,
-			LOAD_WORD_WAIT = 5'd5,
+		LOAD_WORD_WAIT = 5'd5,
       SETUP = 5'd6,
       SETUP_WAIT = 5'd7,
       GUESS_LETTER = 5'd8,
       GUESS_LETTER_WAIT = 5'd9,
       CHECK_LETTER = 5'd10,
-      CHECK_LETTER_DRAW = 5'd10,
+		CHECK_LETTER_DRAW = 5'd11,
       CHECK_LETTER_WAIT = 5'd11,
       CHECK_WORD_DRAW = 5'd12,
       CHECK_VICTORY = 5'd13,
@@ -161,83 +170,60 @@ module control(clock, resetn, done, key, goNextState, wins);
 	
 	always @(*)
 	begin: enable_signals // datapath control signals
-		enable = 1'b0;
+		
+		//enable <= 1'b0;
+		
 		
 		case (cur_state)
 			DRAW_INIT: begin
 				
 			end
       LOAD_NUM: begin
-				enable = 1'b1;
+				
+				//enable <= 1'b1;
 			end
 			LOAD_NUM_WAIT: begin
-				enable = 1'b1;
+				//enable <= 1'b1;
 			end
 			LOAD_WORD: begin
-				enable = 1'b1;
+				//enable <= 1'b1;
 			end
 			LOAD_WORD_WAIT: begin
-				enable = 1'b1;
+				//enable <= 1'b1;
 			end
       SETUP: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       SETUP_WAIT: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       GUESS_LETTER: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       GUESS_LETTER_WAIT: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       CHECK_LETTER: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
+
 			end
       CHECK_LETTER_WAIT: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       CHECK_VICTORY: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
-			end
-      CHECK_VICTORY_WAIT: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       VICTORY : begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       VICTORY_WAIT: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       DEATH: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
       DEATH_WAIT: begin
-				ld_c = 1'b1;
-				enable = 1'b1;
-				plot = 1'b1;
+				//enable <= 1'b1;
 			end
 		endcase
 	end
@@ -245,8 +231,8 @@ module control(clock, resetn, done, key, goNextState, wins);
 	always @(posedge clock)
 	begin: state_FFs // current state registers
 		cur_state = nxt_state;
-		if (!reset_n)
-			cur_state = S_CYCLE_0;
+		if (!resetn)
+			cur_state = DRAW_INIT;
 		else
 			cur_state = nxt_state;
 	end
