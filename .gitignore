@@ -29,3 +29,7 @@ project.xcworkspace
 *.out
 .git/
 _MACOSX/
+db/
+*.rpt
+*.smsg
+*.summary

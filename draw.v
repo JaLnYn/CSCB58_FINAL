@@ -2,8 +2,8 @@ module draw(sx, sy, en, img, counter, clk, outx, outy);
   input [6:0] sx, sy, img;
   input [3:0] counter;
   input en, clk;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(posedge clk)
 	begin
     if(en == 1'd1) // if enabled
@@ -70,14 +70,13 @@ module draw(sx, sy, en, img, counter, clk, outx, outy);
       else if (img == 5'd31)
         draw_Z(sx, sy, counter,  outx, outy);
     end
-	end
 endmodule
 
 module draw_head(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -117,14 +116,13 @@ module draw_head(sx, sy, counter,  outx, outy);
           outy = sy + 1;
         end
     endcase
-  end
 endmodule
 
 module draw_body(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -148,14 +146,13 @@ module draw_body(sx, sy, counter,  outx, outy);
           outy = sy + 6;
         end
     endcase
-  end
 endmodule
 
 module draw_arms(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -195,14 +192,13 @@ module draw_arms(sx, sy, counter,  outx, outy);
           outy = sy + 3;
         end
     endcase
-  end
 endmodule
 
 module draw_legs(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -262,14 +258,13 @@ module draw_legs(sx, sy, counter,  outx, outy);
           outy = sy + 13;
         end
     endcase
-  end
 endmodule
 
 module draw_rightleg(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -317,14 +312,13 @@ module draw_rightleg(sx, sy, counter,  outx, outy);
           outy = sy + 6;
         end
     endcase
-  end
 endmodule
 
 module draw_A(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -376,14 +370,13 @@ module draw_A(sx, sy, counter,  outx, outy);
           outy = sy + 5;
         end
     endcase
-  end
 endmodule
 
 module draw_B(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -439,14 +432,13 @@ module draw_B(sx, sy, counter,  outx, outy);
           outy = sy + 5;
         end
     endcase
-  end
 endmodule
 
 module draw_C(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -482,14 +474,13 @@ module draw_C(sx, sy, counter,  outx, outy);
           outy = sy;
         end
     endcase
-  end
 endmodule
 
 module draw_D(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -538,14 +529,13 @@ module draw_D(sx, sy, counter,  outx, outy);
         end
       
     endcase
-  end
 endmodule
 
 module draw_E(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
       4'd0: begin
@@ -581,7 +571,7 @@ module draw_E(sx, sy, counter,  outx, outy);
           outy = sy+3;
         end
       4'd8: begin
-          outx = sx + ;
+          outx = sx;
           outy = sy + 4;
         end
       4'd9: begin
@@ -601,135 +591,134 @@ module draw_E(sx, sy, counter,  outx, outy);
           outy = sy + 5;
         end
     endcase
-  end
 endmodule
 
 module draw_F(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
 endmodule
 
 module draw_G(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
 endmodule
 
 module draw_H(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
 endmodule
 
 module draw_I(sx, sy, counter,  outx, outy);
   input [6:0] sx, sy;
   input [3:0] counter;
-  reg output [6:0] outx;
-  reg output [6:0] outy;
+  output reg [6:0] outx;
+  output reg [6:0] outy;
 endmodule
 
 module draw_J(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_K(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_L(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_M(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_N(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_O(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_P(sx, sy, counter, outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_Q(sx, sy, counter, outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_R(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_S(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_T(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_U(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_V(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_W(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_X(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_Y(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
 
 module draw_Z(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
-  reg output outx;
-  reg output outy;
+  output reg outx;
+  output reg outy;
 endmodule
