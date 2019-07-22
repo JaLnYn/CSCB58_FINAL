@@ -35,3 +35,4 @@ db/
 *.summary
 greybox_tmp/
 *.qip
+*.bak
