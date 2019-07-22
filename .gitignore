@@ -33,3 +33,5 @@ db/
 *.rpt
 *.smsg
 *.summary
+greybox_tmp/
+*.qip
