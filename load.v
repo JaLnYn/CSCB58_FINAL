@@ -10,10 +10,10 @@ module load(clk, load, counter, ascii_code, first_letter, second_letter, third_l
     output reg [7:0]sixth_letter; 
     output reg [7:0]seventh_letter;
     output reg [7:0]eighth_letter;
-	 output reg [7:0]ninth_letter;
+	  output reg [7:0]ninth_letter;
     output reg [7:0]tenth_letter;
 
-	 input [3:0]counter;
+	  input [3:0]counter;
 	 
     always @(posedge clk)
     begin

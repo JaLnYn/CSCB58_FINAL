@@ -70,6 +70,7 @@ module draw(sx, sy, en, img, counter, clk, outx, outy);
       else if (img == 5'd31)
         draw_Z(sx, sy, counter,  outx, outy);
     end
+	end
 endmodule
 
 module draw_head(sx, sy, counter,  outx, outy);
@@ -116,6 +117,7 @@ module draw_head(sx, sy, counter,  outx, outy);
           outy = sy + 1;
         end
     endcase
+  end
 endmodule
 
 module draw_body(sx, sy, counter,  outx, outy);
@@ -146,6 +148,7 @@ module draw_body(sx, sy, counter,  outx, outy);
           outy = sy + 6;
         end
     endcase
+  end
 endmodule
 
 module draw_arms(sx, sy, counter,  outx, outy);
@@ -192,6 +195,7 @@ module draw_arms(sx, sy, counter,  outx, outy);
           outy = sy + 3;
         end
     endcase
+  end
 endmodule
 
 module draw_legs(sx, sy, counter,  outx, outy);
@@ -258,6 +262,7 @@ module draw_legs(sx, sy, counter,  outx, outy);
           outy = sy + 13;
         end
     endcase
+  end
 endmodule
 
 module draw_rightleg(sx, sy, counter,  outx, outy);
@@ -312,6 +317,7 @@ module draw_rightleg(sx, sy, counter,  outx, outy);
           outy = sy + 6;
         end
     endcase
+  end
 endmodule
 
 module draw_A(sx, sy, counter,  outx, outy);
@@ -322,7 +328,7 @@ module draw_A(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx + 1;
+          outx = sx;
           outy = sy;
         end
       4'd1: begin
@@ -342,34 +348,35 @@ module draw_A(sx, sy, counter,  outx, outy);
           outy = sy + 4;
         end
       4'd5: begin
-          outx = sx;
-          outy = sy + 5;
+          outx = sx + 2;
+          outy = sy;
         end
       4'd6: begin
-          outx = sx + 1;
-          outy = sy + 2;
-        end
-      4'd7: begin
           outx = sx + 2;
           outy = sy + 1;
         end
-      4'd8: begin
+      4'd7: begin
           outx = sx + 2;
           outy = sy + 2;
         end
-      4'd9: begin
+      4'd8: begin
           outx = sx + 2;
           outy = sy + 3;
         end
-      4'd10: begin
+      4'd9: begin
           outx = sx + 2;
           outy = sy + 4;
         end
+      4'd10: begin
+          outx = sx + 1;
+          outy = sy;
+        end
       4'd11: begin
-          outx = sx + 2;
-          outy = sy + 5;
+          outx = sx + 1;
+          outy = sy + 2;
         end
     endcase
+  end
 endmodule
 
 module draw_B(sx, sy, counter,  outx, outy);
@@ -380,7 +387,7 @@ module draw_B(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx + 1;
+          outx = sx;
           outy = sy;
         end
       4'd1: begin
@@ -400,38 +407,27 @@ module draw_B(sx, sy, counter,  outx, outy);
           outy = sy + 4;
         end
       4'd5: begin
-          outx = sx;
-          outy = sy + 5;
+          outx = sx + 1;
+          outy = sy;
         end
       4'd6: begin
-          outx = sx;
-          outy = sy;
+          outx = sx + 1;
+          outy = sy + 2;
         end
       4'd7: begin
           outx = sx + 1;
-          outy = sy;
+          outy = sy + 4;
         end
       4'd8: begin
           outx = sx + 2;
           outy = sy + 1;
         end
       4'd9: begin
-          outx = sx + 1;
+          outx = sx + 2;
           outy = sy + 3;
         end
-      4'd10: begin
-          outx = sx + 2;
-          outy = sy + 4;
-        end
-      4'd11: begin
-          outx = sx + 2;
-          outy = sy + 5;
-        end
-      4'd12: begin
-          outx = sx + 1;
-          outy = sy + 5;
-        end
     endcase
+  end
 endmodule
 
 module draw_C(sx, sy, counter,  outx, outy);
@@ -446,20 +442,20 @@ module draw_C(sx, sy, counter,  outx, outy);
           outy = sy;
         end
       4'd1: begin
-          outx = sx;
+          outx = sx + 2;
           outy = sy + 1;
         end
       4'd2: begin
           outx = sx;
-          outy = sy + 2;
+          outy = sy + 1;
         end
       4'd3: begin
           outx = sx;
-          outy = sy + 3;
+          outy = sy + 2;
         end
       4'd4: begin
           outx = sx;
-          outy = sy + 4;
+          outy = sy + 3;
         end
       4'd5: begin
           outx = sx + 1;
@@ -469,11 +465,8 @@ module draw_C(sx, sy, counter,  outx, outy);
           outx = sx + 2;
           outy = sy + 4;
         end
-      4'd7: begin
-          outx = sx + 2;
-          outy = sy;
-        end
     endcase
+  end
 endmodule
 
 module draw_D(sx, sy, counter,  outx, outy);
@@ -504,16 +497,13 @@ module draw_D(sx, sy, counter,  outx, outy);
           outy = sy + 4;
         end
       4'd5: begin
-          outx = sx;
-          outy = sy + 5;
-        end
-      4'd6: begin
-          outx = sx+1;
+          outx = sx + 1;
           outy = sy;
         end
-      4'd7: begin
+      4'd6: begin
           outx = sx + 1;
-          outy = sy+5;
+          outy = sy + 4;
+        end
         end
       4'd8: begin
           outx = sx + 2;
@@ -521,14 +511,15 @@ module draw_D(sx, sy, counter,  outx, outy);
         end
       4'd9: begin
           outx = sx + 2;
-          outy = sy + 3;
+          outy = sy + 2;
         end
       4'd10: begin
           outx = sx + 2;
-          outy = sy + 4;
+          outy = sy + 3;
         end
       
     endcase
+  end
 endmodule
 
 module draw_E(sx, sy, counter,  outx, outy);
@@ -576,21 +567,14 @@ module draw_E(sx, sy, counter,  outx, outy);
         end
       4'd9: begin
           outx = sx + 1;
-          outy = sy + 3;
+          outy = sy + 4;
         end
       4'd10: begin
           outx = sx + 2;
           outy = sy + 4;
         end
-      4'd11: begin
-          outx = sx + 2;
-          outy = sy + 5;
-        end
-      4'd12: begin
-          outx = sx + 1;
-          outy = sy + 5;
-        end
     endcase
+  end
 endmodule
 
 module draw_F(sx, sy, counter,  outx, outy);
@@ -598,6 +582,46 @@ module draw_F(sx, sy, counter,  outx, outy);
   input [3:0] counter;
   output reg [6:0] outx;
   output reg [6:0] outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx+1;
+        outy = sy;
+        end
+    4'd2 begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3 begin 
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd4 begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd5 begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd6 begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd7 begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd8 begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_G(sx, sy, counter,  outx, outy);
@@ -605,6 +629,46 @@ module draw_G(sx, sy, counter,  outx, outy);
   input [3:0] counter;
   output reg [6:0] outx;
   output reg [6:0] outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    endcase
+    end
 endmodule
 
 module draw_H(sx, sy, counter,  outx, outy);
@@ -612,6 +676,55 @@ module draw_H(sx, sy, counter,  outx, outy);
   input [3:0] counter;
   output reg [6:0] outx;
   output reg [6:0] outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+          outx = sx;
+          outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    endcase
+    end
+     
 endmodule
 
 module draw_I(sx, sy, counter,  outx, outy);
@@ -619,106 +732,1352 @@ module draw_I(sx, sy, counter,  outx, outy);
   input [3:0] counter;
   output reg [6:0] outx;
   output reg [6:0] outy;
+  always @(counter)
+    case (counter)
+      4'd0: begin
+          outx = sx;
+          outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx + 1;
+        outy = sy + 1;
+        end
+    4'd4: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 3;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd7: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd8: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end  
 endmodule
 
 module draw_J(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+          outx = sx + 2;
+          outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd6: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd7: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_K(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd8: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd9: begin
+        outx = sx;
+        outy = sy;
+        end
+    endcase
+    end
 endmodule
 
 module draw_L(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end  
 endmodule
 
 module draw_M(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx = 2;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 1;
+        outy = sy + 1;
+        end
+    endcase
+    end  
 endmodule
 
 module draw_N(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd5: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + !;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd10: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end 
 endmodule
 
 module draw_O(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end    
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd10: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd11: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end 
 endmodule
 
 module draw_P(sx, sy, counter, outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd7: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    endcase
+    end  
 endmodule
 
 module draw_Q(sx, sy, counter, outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 1;
+        outy = sy + 3;
+        end
+    4'd9: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_R(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_S(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd0: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd0: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd0: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd0: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd0: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd0: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_T(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx + 1;
+        outy = sy + 1;
+        end
+    4'd4: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 3;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_U(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+
+    endcase
+    end
 endmodule
 
 module draw_V(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    endcase
+    end
 endmodule
 
 module draw_W(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 1;
+        outy = sy + 3;
+        end
+    endcase
+    end
 endmodule
 
 module draw_X(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'60: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd8: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end    
+    endcase
+    end
 endmodule
 
 module draw_Y(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd7: begin
+        outx = sx + 1;
+        outy = sy + 3;
+        end
+    4'd8: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    endcase
+    end
 endmodule
 
 module draw_Z(sx, sy, counter,  outx, outy);
   input sx, sy, counter;
   output reg outx;
   output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd4: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    endcase
+    end
+endmodule
+
+
+
+module draw_1(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx + 1;
+        outy = sy + 1;
+        end
+    4'd3: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx + 1;
+        outy = sy + 3;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx ;
+        outy = sy + 4;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    endcase
+    end
+endmodule
+
+module draw_2(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd3: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd5: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd6: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_3(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+     4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd7: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd8: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd9: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_4(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd3: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd8: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_5(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd8: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd9: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_6(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd6: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd8: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd9: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 2;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_7(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd4: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd6: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_8(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+          outx = sx;
+          outy = sy;
+        end
+    4'd1: begin
+          outx = sx;
+          outy = sy + 1;
+       end
+    4'd2: begin
+          outx = sx;
+          outy = sy + 2;
+        end
+    4'd3: begin
+          outx = sx;
+          outy = sy + 3;
+        end
+    4'd4: begin
+          outx = sx;
+          outy = sy + 4;
+        end
+    4'd5: begin
+          outx = sx + 2;
+          outy = sy;
+        end
+    4'd6: begin
+          outx = sx + 2;
+          outy = sy + 1;
+        end
+    4'd7: begin
+          outx = sx + 2;
+          outy = sy + 2;
+        end
+    4'd8: begin
+          outx = sx + 2;
+          outy = sy + 3;
+        end
+    4'd9: begin
+          outx = sx + 2;
+          outy = sy + 4;
+        end
+    4'd10: begin
+          outx = sx + 1;
+          outy = sy;
+        end
+    4'd11: begin
+          outx = sx + 1;
+          outy = sy + 2;
+        end
+    4'd11: begin
+          outx = sx + 1;
+          outy = sy + 4;
+        end
+    endcase
+  end
+endmodule
+
+module draw_9(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx;
+        outy = sy;
+        end
+    4'd1: begin
+        outx = sx + 1;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd3: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd4: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    4'd6: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd7: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd8: begin
+        outx = sx + 1;
+        outy = sy + 2;
+        end
+    4'd9: begin
+        outx = sx;
+        outy = sy + 4;
+        end
+    4'd10: begin
+        outx = sx + 1;
+        outy = sy + 4;
+        end
+    endcase
+    end
+endmodule
+
+module draw_0(sx, sy, counter,  outx, outy);
+  input sx, sy, counter;
+  output reg outx;
+  output reg outy;
+  always @(counter)
+    case (counter)
+    4'd0: begin
+        outx = sx + 1; + 4;
+        end
+    4'd1: begin
+        outx = sx + 2;
+        outy = sy;
+        end
+    4'd2: begin
+        outx = sx;
+        outy = sy + 1;
+        end
+    4'd3: begin
+        outx = sx;
+        outy = sy + 2;
+        end
+    4'd4: begin
+        outx = sx;
+        outy = sy + 3;
+        end
+    4'd5: begin
+        outx = sx + 2;
+        outy = sy + 1;
+        end
+    4'd6: begin
+        outx = sx + 2;
+        outy = sy + 2;
+        end
+    4'd7: begin
+        outx = sx + 2;
+        outy = sy + 3;
+        end
+    endcase
+    end
 endmodule

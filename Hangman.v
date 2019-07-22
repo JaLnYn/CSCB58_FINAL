@@ -4,8 +4,8 @@ module Hangman
 	(
 		CLOCK_50,						//	On Board 50 MHz
 		// Your inputs and outputs here
-		KEY,
-		SW,
+    KEY,
+    SW,
 		// The ports below are for the VGA output.  Do not change.
 		VGA_CLK,   						//	VGA Clock
 		VGA_HS,							//	VGA H_SYNC
@@ -64,26 +64,46 @@ module Hangman
 		defparam VGA.RESOLUTION = "160x120";
 		defparam VGA.MONOCHROME = "FALSE";
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 3;
-		defparam VGA.BACKGROUND_IMAGE = "hangman.colour.mif"; // Might have too many bits, can change by setting VGA.MONOCHROME = TRUE and using hangman.mono.mif
+		defparam VGA.BACKGROUND_IMAGE = "hangman.colour.mif";
 			
-	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
-	// for the VGA controller, in addition to any other functionality your design may require.
-	wire done, enable, letter_found, load;
+	
+    wire done, enable, letter_found, load;
 
-	wire [7:0] key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0;
-	wire [9:0] checkModOut;
-	wire [3:0] counter;
+    wire [7:0] key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0;
+    wire [9:0] checkModOut;
+    wire [3:0] counter;
+    
+    
+    load ld(CLOCK_50, load, counter, key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0);
+    check_module cm(key,l1, l2,l3,l4,l5,l6,l7,l8,l9,l0, letter_found, checkModOut);
 
-
-	load ld(CLOCK_50, load, counter, key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0);
-	check_module cm(key,l1, l2,l3,l4,l5,l6,l7,l8,l9,l0, letter_found, checkModOut);
-
-	// Instantiate FSM control
-	control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
+    // Instantiate FSM control
+	  control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
 	 
 endmodule
 
-module control(clock, resetn, done, key, goNextState, wins, x, y, colour);
+module sync_counter(enable, clock, reset_n, inc, endb, q);
+	input enable, clock, reset_n, inc;
+	input [7:0] endb;
+	output reg [7:0] q;
+	
+	output [3:0] debug;
+	assign debug = q;
+	
+	always @(posedge clock)
+	begin
+		if (reset_n == 1'b0)
+			q <= startb;
+		else if (enable == 1'b1)
+			if (q == endVal)
+				q <= 2'b00;
+			else
+				q <= q + inc;
+	end
+endmodule
+
+
+module control(clock, resetn, done, key, goNextState, wins, enable, x, y, colour);
 	input clock, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
 	input [7:0] key;
 	input [7:0] x;
@@ -93,18 +113,18 @@ module control(clock, resetn, done, key, goNextState, wins, x, y, colour);
 	reg [4:0] cur_state, nxt_state;
 
 	
-   localparam  DRAW_INIT = 5'd0,
+  localparam  DRAW_INIT = 5'd0,
       LOAD_NUM = 5'd1,
-		LOAD_NUM_WAIT = 5'd2,
-		LOAD_WORD = 5'd3,
+		  LOAD_NUM_WAIT = 5'd2,
+		  LOAD_WORD = 5'd3,
       LOAD_WORD_DRAW = 5'd4,
-		LOAD_WORD_WAIT = 5'd5,
+		  LOAD_WORD_WAIT = 5'd5,
       SETUP = 5'd6,
       SETUP_WAIT = 5'd7,
       GUESS_LETTER = 5'd8,
       GUESS_LETTER_WAIT = 5'd9,
       CHECK_LETTER = 5'd10,
-		CHECK_LETTER_DRAW = 5'd11,
+		  CHECK_LETTER_DRAW = 5'd11,
       CHECK_LETTER_WAIT = 5'd11,
       CHECK_WORD_DRAW = 5'd12,
       CHECK_VICTORY = 5'd13,
@@ -112,65 +132,64 @@ module control(clock, resetn, done, key, goNextState, wins, x, y, colour);
       VICTORY_WAIT = 5'd16,
       DEATH = 5'd17,
       DEATH_WAIT = 5'd18;
-		
 	always @(*)
 	begin: state_table // next state logic
 		case (cur_state)
-			//DRAW_SPLASH_SCREEN: begin
+      //DRAW_SPLASH_SCREEN: begin
 			//		assign enable = 1'b1;
 			//		drawSplashScreen drawS(enable, clock, resetn, x, y, colour);
 			//		assign enable = 1'b0;
 			//		nxt_state <= DRAW_INIT;
 			//	end
-			DRAW_INIT: nxt_state = done ? LOAD_WORD : DRAW_INIT;
-				LOAD_WORD: begin
-				 if(key == 8'h0A)
-					nxt_state <= LOAD_WORD_WAIT;
-				 else
-					nxt_state <= LOAD_WORD;
-			  end
-				LOAD_WORD_WAIT: begin
-				 if(key == 8'h00)
-					nxt_state <= LOAD_WORD_DRAW;
-				 else
-					nxt_state <= LOAD_WORD_WAIT;
-			  end
-			LOAD_WORD_DRAW: begin
-				 if(done && goNextState) // done drawing
-					nxt_state <= LOAD_WORD_DRAW;
-				 else if(done) 
-					nxt_state <= LOAD_WORD;
-				 else
-					nxt_state <= LOAD_WORD_DRAW;
-			  end
-			SETUP:  nxt_state = done ? SETUP_WAIT : SETUP;
-			SETUP_WAIT: nxt_state = done ? GUESS_LETTER : SETUP_WAIT;
-			GUESS_LETTER: begin
-				 if(key != 8'h00 ) // done drawing
-					nxt_state <= GUESS_LETTER_WAIT;
-				 else 
-					nxt_state <= GUESS_LETTER;
-			  end
-			GUESS_LETTER_WAIT: begin
-				 if(key == 8'h00)
-					nxt_state <= CHECK_LETTER;
-				 else
-					nxt_state <= GUESS_LETTER;
-			  end
-			CHECK_LETTER: nxt_state = done ? CHECK_LETTER_DRAW : CHECK_LETTER;
-			CHECK_LETTER_DRAW: begin
-				 if(done && goNextState) // done drawing
-					if(wins)
-					  nxt_state <= VICTORY;
-					else
-					  nxt_state <= DEATH;
-					
-				 else if(done) 
-					nxt_state <= LOAD_WORD;
-				 else
-					nxt_state <= LOAD_WORD_DRAW;
-			  end
-			VICTORY: begin
+      DRAW_INIT: nxt_state = done ? LOAD_WORD : DRAW_INIT;
+			LOAD_WORD: begin
+          if(key == 8'h0A)
+            nxt_state <= LOAD_WORD_WAIT;
+          else
+            nxt_state <= LOAD_WORD;
+        end
+			LOAD_WORD_WAIT: begin
+          if(key == 8'h00)
+            nxt_state <= LOAD_WORD_DRAW;
+          else
+            nxt_state <= LOAD_WORD_WAIT;
+        end
+      LOAD_WORD_DRAW: begin
+          if(done && goNextState) // done drawing
+            nxt_state <= LOAD_WORD_DRAW;
+          else if(done) 
+            nxt_state <= LOAD_WORD;
+          else
+            nxt_state <= LOAD_WORD_DRAW;
+        end
+      SETUP:  nxt_state = done ? SETUP_WAIT : SETUP;
+      SETUP_WAIT: nxt_state = done ? GUESS_LETTER : SETUP_WAIT;
+      GUESS_LETTER: begin
+          if(key != 8'h00 ) // done drawing
+            nxt_state <= GUESS_LETTER_WAIT;
+          else 
+            nxt_state <= GUESS_LETTER;
+        end
+      GUESS_LETTER_WAIT: begin
+          if(key == 8'h00)
+            nxt_state <= CHECK_LETTER;
+          else
+            nxt_state <= GUESS_LETTER;
+        end
+      CHECK_LETTER: nxt_state = done ? CHECK_LETTER_DRAW : CHECK_LETTER;
+      CHECK_LETTER_DRAW: begin
+          if(done && goNextState) // done drawing
+            if(wins)
+              nxt_state <= VICTORY;
+            else
+              nxt_state <= DEATH;
+            
+          else if(done) 
+            nxt_state <= LOAD_WORD;
+          else
+            nxt_state <= LOAD_WORD_DRAW;
+        end
+      VICTORY: begin
 					assign enable = 1'b1;
 					drawVictoryScreen drawV(enable, clock, resetn, x, y, colour);
 					assign enable = 1'b0;
@@ -185,10 +204,10 @@ module control(clock, resetn, done, key, goNextState, wins, x, y, colour);
 					nxt_state <= DEATH_WAIT;
 				end
 			DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
-				default: nxt_state = DRAW_INIT;
+			  default: nxt_state = DRAW_INIT;
 		endcase
 	end
-	
+  
 	always @(*)
 	begin: enable_signals // datapath control signals
 		
