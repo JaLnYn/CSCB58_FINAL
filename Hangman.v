@@ -78,38 +78,17 @@ module Hangman
     check_module cm(key,l1, l2,l3,l4,l5,l6,l7,l8,l9,l0, letter_found, checkModOut);
 
     // Instantiate FSM control
-	  control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
+	  controls c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
 	 
 endmodule
 
-module sync_counter(enable, clock, reset_n, inc, endb, q);
-	input enable, clock, reset_n, inc;
-	input [7:0] endb;
-	output reg [7:0] q;
-	
-	output [3:0] debug;
-	assign debug = q;
-	
-	always @(posedge clock)
-	begin
-		if (reset_n == 1'b0)
-			q <= startb;
-		else if (enable == 1'b1)
-			if (q == endVal)
-				q <= 2'b00;
-			else
-				q <= q + inc;
-	end
-endmodule
-
-
-module control(clock, resetn, done, key, goNextState, wins, enable, x, y, colour);
+module controls(clock, resetn, done, key, goNextState, wins, enable, x, y, colour);
 	input clock, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
 	input [7:0] key;
 	input [7:0] x;
 	input [6:0] y;
 	input [2:0] colour;
-	//input reg enable;
+	input enable;
 	reg [4:0] cur_state, nxt_state;
 
 	
@@ -189,22 +168,22 @@ module control(clock, resetn, done, key, goNextState, wins, enable, x, y, colour
           else
             nxt_state <= LOAD_WORD_DRAW;
         end
-      VICTORY: begin
-					assign enable = 1'b1;
-					drawVictoryScreen drawV(enable, clock, resetn, x, y, colour);
-					assign enable = 1'b0;
-					nxt_state <= VICTORY_WAIT;
-				end
-			VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
-			DEATH: begin
-					assign enable = 1'b1;
-					drawDeathScreen drawD(enable, clock, resetn, x, y, colour);
-					assign enable = 1'b0;
-					nxt_state <= VICTORY_WAIT;
-					nxt_state <= DEATH_WAIT;
-				end
-			DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
-			  default: nxt_state = DRAW_INIT;
+//      VICTORY: begin
+//					 enable = 1'b1;
+//					//drawVictoryScreen drawV(enable, clock, resetn, x, y, colour);
+//					 enable = 1'b0;
+//					nxt_state <= VICTORY_WAIT;
+//				end
+//		VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
+//			DEATH: begin
+//					 enable = 1'b1;
+//					//drawDeathScreen drawD(enable, clock, resetn, x, y, colour);
+//					 enable = 1'b0;
+//					nxt_state <= VICTORY_WAIT;
+//					nxt_state <= DEATH_WAIT;
+//				end
+//			DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
+//			  default: nxt_state = DRAW_INIT;
 		endcase
 	end
   

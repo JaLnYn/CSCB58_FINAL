@@ -107,7 +107,7 @@ endmodule
 // CNX file retrieval info
 // ============================================================
 // Retrieval info: PRIVATE: ADDRESSSTALL_A NUMERIC "0"
-// Retrieval info: PRIVATE: AclrAddr NUMERIC "0"
+// Retrieval info: PRIVATE: AclrAddr NUMERIC "0"victoryRAM
 // Retrieval info: PRIVATE: AclrByte NUMERIC "0"
 // Retrieval info: PRIVATE: AclrData NUMERIC "0"
 // Retrieval info: PRIVATE: AclrOutput NUMERIC "0"
