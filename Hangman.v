@@ -14,13 +14,19 @@ module Hangman
 		VGA_SYNC_N,						//	VGA SYNC
 		VGA_R,   						//	VGA Red[9:0]
 		VGA_G,	 						//	VGA Green[9:0]
-		VGA_B   						//	VGA Blue[9:0]
+		VGA_B,   						//	VGA Blue[9:0]
+		PS2_CLK,
+      PS2_KBDAT,
+		LEDR
 	);
-
+	
+	output [7:0] LEDR;
 	input			CLOCK_50;				//	50 MHz
 	input   [17:0]  SW;
 	//output  [17:0]  LEDR;
 	input   [3:0]   KEY;
+	input PS2_CLK;
+   input PS2_KBDAT;
 
 	// Declare your inputs and outputs here
 	// Do not change the following outputs
@@ -35,13 +41,32 @@ module Hangman
 	
 	wire resetn;
 	assign resetn = KEY[0];
+  assign enable = 1'b1;
 	
 	// Create the colour, x, y and writeEn wires that are inputs to the controller.
 	wire [2:0] colour;
 	wire [7:0] x;
 	wire [6:0] y;
 	wire writeEn;
-
+	wire [7:0] scan_code;
+	wire scan_code_ready;
+	wire letter_case_out;
+	
+	wire [7:0] ascii_code;
+	 keyboard k0
+        (
+            .clk(CLOCK_50),
+            .reset(KEY[0]),
+            .ps2d(PS2_KBDAT),
+            .ps2c(PS2_CLK),
+            .scan_code(scan_code),
+            .scan_code_ready(scan_code_ready),
+            .letter_case_out(letter_case_out)            
+        );
+    
+	 
+	 key2ascii k2a(1'b1, scan_code, ascii_code);
+	 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
@@ -69,35 +94,64 @@ module Hangman
 	
     wire done, enable, letter_found, load;
 
-    wire [7:0] key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0;
+    reg keyDown;
+
+    reg [7:0] key;
+	 wire [7:0] l1, l2,l3,l4,l5,l6,l7,l8,l9,l0;
     wire [9:0] checkModOut;
     wire [3:0] counter;
+	 reg [3:0]letterNum;
     
-    
+	always @(posedge scan_code_ready)
+	begin
+		if(keyDown == 0) begin
+			key <= ascii_code;
+			if(key == 8'h12) begin
+				// left arrow
+				if(letterNum != 9) begin 
+				letterNum <= letterNum + 9'd1;
+				end
+			end
+			if(key == 8'h14) begin
+				// left arrow
+				if(letterNum != 0) begin 
+				letterNum <= letterNum - 9'd1;
+				end
+			end
+		end
+		
+	end
+	assign LEDR[7:0] = ascii_code;
+	wire [2:0] colour1;
+	wire [2:0] colour2;
     load ld(CLOCK_50, load, counter, key, l1, l2,l3,l4,l5,l6,l7,l8,l9,l0);
     check_module cm(key,l1, l2,l3,l4,l5,l6,l7,l8,l9,l0, letter_found, checkModOut);
-
+    loadValDatapath jeff(l1, l2, l3, l4, l5, l6, l7, l8, l9, l0, letterNum, CLOCK_50, 1'b1, enable, colour1, x, y, done);
     // Instantiate FSM control
-	  controls c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
+	  control c0(CLOCK_50, resetn, SW[17], SW[16], done, enable);
+	  
 	 
 endmodule
 
-module controls(clock, resetn, done, key, goNextState, wins, enable, x, y, colour);
+
+module control(clock, resetn, done, key, goNextState, wins);
 	input clock, resetn, done, goNextState, wins; //note done has to mean keyboard enter is not pressed
 	input [7:0] key;
-	input [7:0] x;
-	input [6:0] y;
-	input [2:0] colour;
-	input enable;
+	//
+	//input reg enable;
 	reg [4:0] cur_state, nxt_state;
+	
+	//assign writeEn = VEn || DEn;
 
+	//drawVictoryScreen drawV(VEn, clock, resetn, x, y, colour, done);
+	//drawDeathScreen drawD(DEn, clock, resetn, x, y, colour, done);
 	
   localparam  DRAW_INIT = 5'd0,
       LOAD_NUM = 5'd1,
-		  LOAD_NUM_WAIT = 5'd2,
-		  LOAD_WORD = 5'd3,
+		LOAD_NUM_WAIT = 5'd2,
+		LOAD_WORD = 5'd3,
       LOAD_WORD_DRAW = 5'd4,
-		  LOAD_WORD_WAIT = 5'd5,
+		LOAD_WORD_WAIT = 5'd5,
       SETUP = 5'd6,
       SETUP_WAIT = 5'd7,
       GUESS_LETTER = 5'd8,
@@ -168,22 +222,16 @@ module controls(clock, resetn, done, key, goNextState, wins, enable, x, y, colou
           else
             nxt_state <= LOAD_WORD_DRAW;
         end
-//      VICTORY: begin
-//					 enable = 1'b1;
-//					//drawVictoryScreen drawV(enable, clock, resetn, x, y, colour);
-//					 enable = 1'b0;
-//					nxt_state <= VICTORY_WAIT;
-//				end
-//		VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
-//			DEATH: begin
-//					 enable = 1'b1;
-//					//drawDeathScreen drawD(enable, clock, resetn, x, y, colour);
-//					 enable = 1'b0;
-//					nxt_state <= VICTORY_WAIT;
-//					nxt_state <= DEATH_WAIT;
-//				end
-//			DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
-//			  default: nxt_state = DRAW_INIT;
+      VICTORY: begin
+					nxt_state<= VICTORY_WAIT;
+				end
+			VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
+			DEATH: begin
+					
+					nxt_state <= DEATH_WAIT;
+				end
+			DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
+			  default: nxt_state = DRAW_INIT;
 		endcase
 	end
   

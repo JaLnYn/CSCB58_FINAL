@@ -6,15 +6,15 @@ module draw(sx, sy, en, img, counter, clk, outx, outy);
   output reg [6:0] outy;
   
   wire [6:0] dhex, dhey;
-  draw_head dhe(sx, sy, counter,  dhex, dhex);
+  draw_head dhe(sx, sy, counter,  dhex, dhey);
   wire [6:0] dbodx, dbody;
   draw_body dbod(sx, sy, counter,  dbodx, dbody);
   wire [6:0] darx, dary;
   draw_arms dar(sx, sy, counter,  darx, dary);
   wire [6:0] dllx, dlly;
-  draw_leftleg dll(sx, sy, counter,  dllx, dlly);
+  //draw_leftleg dll(sx, sy, counter,  dllx, dlly);
   wire [6:0] drlx, drly;
-  draw_rightleg drl(sx, sy, counter,  drlx, drly);
+  //draw_rightleg drl(sx, sy, counter,  drlx, drly);
   wire [6:0] dax, day;
   draw_A da(sx, sy, counter, dax, day);
   wire [6:0] dbx, dby;

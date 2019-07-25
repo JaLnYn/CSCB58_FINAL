@@ -1,4 +1,4 @@
-module loadValDatapath(first_letter, second_letter, third_letter, fourth_letter, fifth_letter, sixth_letter, seventh_letter, eighth_letter, ninth_letter, tenth_letter, letterNum, clock, reset_n, enable, ld_x, ld_y, ld_c, col_in, col_out, X, Y, done);
+module loadValDatapath(first_letter, second_letter, third_letter, fourth_letter, fifth_letter, sixth_letter, seventh_letter, eighth_letter, ninth_letter, tenth_letter, letterNum, clock, reset_n, enable, col_out, X, Y, done);
   input [7:0]first_letter; 
   input [7:0]second_letter; 
   input [7:0]third_letter; 
@@ -9,8 +9,7 @@ module loadValDatapath(first_letter, second_letter, third_letter, fourth_letter,
   input [7:0]eighth_letter;
   input [7:0]ninth_letter;
   input [7:0]tenth_letter;
-	input reset_n, enable, ld_x, ld_y, ld_c, clock;
-	input [2:0] col_in;
+	input reset_n, enable, clock;
 	output done;
 	output [6:0] X, Y; // location out
 	input [3:0] letterNum;
@@ -26,7 +25,7 @@ module loadValDatapath(first_letter, second_letter, third_letter, fourth_letter,
 	wire [6:0] drawX, drawY;
 	
 	drawAllLetters dr(first_letter, second_letter, third_letter, fourth_letter, fifth_letter, sixth_letter, seventh_letter, eighth_letter, ninth_letter, tenth_letter, q-9'd386, drawAllLetterX,drawAllLetterY);
-	draw dr1(60-40+letterNum*4, 100, 1, 5'd32, q-5'd368 , drawX, drawY);
+	draw dr1(20+letterNum*4, 100, 1, 5'd32, q-5'd368 , drawX, drawY);
 
 	always @(posedge clock)
 	begin
@@ -35,10 +34,6 @@ module loadValDatapath(first_letter, second_letter, third_letter, fourth_letter,
 		else if (enable == 1'b1)
 			q <= q + 1'b1;
 		
-	end
-
-	always @(*)
-	begin
 		if (reset_n == 1'b0)
 			q <= 0;
 		else if (enable == 1'b1) begin
@@ -74,6 +69,7 @@ module loadValDatapath(first_letter, second_letter, third_letter, fourth_letter,
 				py <= drawAllLetterY;
 				end
 		end
+		
 	end
 
 	
