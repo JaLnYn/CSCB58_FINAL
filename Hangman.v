@@ -94,7 +94,7 @@ module Hangman
 	
     wire done, enable, letter_found, load;
 
-    reg keyDown;
+    reg keyDown = 1'b0;
 
     reg [7:0] key;
 	 wire [7:0] l1, l2,l3,l4,l5,l6,l7,l8,l9,l0;
@@ -109,13 +109,13 @@ module Hangman
 			if(key == 8'h12) begin
 				// left arrow
 				if(letterNum != 9) begin 
-				letterNum <= letterNum + 9'd1;
+				letterNum <= letterNum + 3'd1;
 				end
 			end
 			if(key == 8'h14) begin
 				// left arrow
 				if(letterNum != 0) begin 
-				letterNum <= letterNum - 9'd1;
+				letterNum <= letterNum - 3'd1;
 				end
 			end
 		end

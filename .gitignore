@@ -37,3 +37,9 @@ greybox_tmp/
 *.qip
 *.bak
 *.qws
+*.done
+*.jdi
+*.pin
+*.sld
+*.qdf
+incremental_db/

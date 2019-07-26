@@ -44,7 +44,7 @@ module draw(sx, sy, en, img, counter, clk, outx, outy);
   wire [6:0] dnx, dny;
   draw_N dn(sx, sy, counter, dnx, dny);
   wire [6:0] dox, doy;
-  draw_O do(sx, sy, counter, dox, doy);
+  draw_O doh(sx, sy, counter, dox, doy);
   wire [6:0] dpx, dpy;
   draw_P dp(sx, sy, counter, dpx, dpy);
   wire [6:0] dqx, dqy;
@@ -198,7 +198,7 @@ module draw(sx, sy, en, img, counter, clk, outx, outy);
 			outx <= dzx;
 			outy <= dzy;
 			end
-		else if (img == 5'd32) begin
+		else if (img == 6'd32) begin
 			outx <= dbox;
 			outy <= dboy;
 			end
@@ -214,42 +214,46 @@ module draw_head(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx - 1;
-          outy = sy - 1;
+          outx <= sx - 7'd1;
+          outy <= sy - 7'd1;
         end
       4'd1: begin
-          outx = sx;
-          outy = sy - 1;
+          outx <= sx;
+          outy <= sy - 7'd1;
         end
       4'd2: begin
-          outx = sx + 1;
-          outy = sy - 1;
+          outx <= sx + 7'd1;
+          outy <= sy - 7'd1;
         end
       4'd3: begin
-          outx = sx - 1;
-          outy = sy;
+          outx <= sx - 7'd1;
+          outy <= sy;
         end
       4'd4: begin
-          outx = sx ;
-          outy = sy ;
+          outx <= sx ;
+          outy <= sy ;
         end
       4'd5: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
       4'd6: begin
-          outx = sx - 1;
-          outy = sy + 1;
+          outx <= sx - 7'd1;
+          outy <= sy + 7'd1;
         end
       4'd7: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd8: begin
-          outx = sx + 1;
-          outy = sy + 1;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd1;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -261,26 +265,30 @@ module draw_body(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd1: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd2: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 5;
+          outx <= sx;
+          outy <= sy + 7'd5;
         end
       4'd4: begin
-          outx = sx ;
-          outy = sy + 6;
+          outx <= sx ;
+          outy <= sy + 7'd6;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -292,42 +300,46 @@ module draw_arms(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx-4;
-          outy = sy + 3;
+          outx <= sx-4;
+          outy <= sy + 7'd3;
         end
       4'd1: begin
-          outx = sx-3;
-          outy = sy + 3;
+          outx <= sx-3;
+          outy <= sy + 7'd3;
         end
       4'd2: begin
-          outx = sx-2;
-          outy = sy + 3;
+          outx <= sx-2;
+          outy <= sy + 7'd3;
         end
       4'd3: begin
-          outx = sx-1;
-          outy = sy + 3;
+          outx <= sx-7'd1;
+          outy <= sy + 7'd3;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd5: begin
-          outx = sx+1;
-          outy = sy + 3;
+          outx <= sx+7'd1;
+          outy <= sy + 7'd3;
         end
       4'd6: begin
-          outx = sx+2;
-          outy = sy + 3;
+          outx <= sx+2;
+          outy <= sy + 7'd3;
         end
       4'd7: begin
-          outx = sx+3;
-          outy = sy + 3;
+          outx <= sx+3;
+          outy <= sy + 7'd3;
         end
       4'd8: begin
-          outx = sx+4;
-          outy = sy + 3;
+          outx <= sx+4;
+          outy <= sy + 7'd3;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -339,62 +351,66 @@ module draw_legs(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx - 1;
-          outy = sy + 7;
+          outx <= sx - 7'd1;
+          outy <= sy + 7'd7;
         end
       4'd1: begin
-          outx = sx - 2;
-          outy = sy + 8;
+          outx <= sx - 7'd2;
+          outy <= sy + 7'd8;
         end
       4'd2: begin
-          outx = sx - 3;
-          outy = sy + 9;
+          outx <= sx - 7'd3;
+          outy <= sy + 7'd9;
         end
       4'd3: begin
-          outx = sx - 4;
-          outy = sy + 10;
+          outx <= sx - 7'd4;
+          outy <= sy + 7'd10;
         end
       4'd4: begin
-          outx = sx - 5;
-          outy = sy + 11;
+          outx <= sx - 7'd5;
+          outy <= sy + 7'd11;
         end
       4'd5: begin
-          outx = sx - 6;
-          outy = sy + 12;
+          outx <= sx - 7'd6;
+          outy <= sy + 7'd12;
         end
       4'd6: begin
-          outx = sx - 7;
-          outy = sy + 13;
+          outx <= sx - 7;
+          outy <= sy + 7'd13;
         end
       4'd7: begin
-          outx = sx + 1;
-          outy = sy + 7;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd7;
         end
       4'd8: begin
-          outx = sx + 2;
-          outy = sy + 8;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd8;
         end
       4'd9: begin
-          outx = sx + 3;
-          outy = sy + 9;
+          outx <= sx + 7'd3;
+          outy <= sy + 7'd9;
         end
       4'd10: begin
-          outx = sx + 4;
-          outy = sy + 10;
+          outx <= sx + 7'd4;
+          outy <= sy + 7'd10;
         end
       4'd11: begin
-          outx = sx + 5;
-          outy = sy + 11;
+          outx <= sx + 7'd5;
+          outy <= sy + 7'd11;
         end
       4'd12: begin
-          outx = sx + 6;
-          outy = sy + 12;
+          outx <= sx + 7'd6;
+          outy <= sy + 7'd12;
         end
       4'd13: begin
-          outx = sx + 7;
-          outy = sy + 13;
+          outx <= sx + 7'd7;
+          outy <= sy + 7'd13;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -406,50 +422,54 @@ module draw_rightleg(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx - 1;
-          outy = sy + 7;
+          outx <= sx - 7'd1;
+          outy <= sy + 7'd7;
         end
       4'd1: begin
-          outx = sx - 2;
-          outy = sy + 8;
+          outx <= sx - 7'd2;
+          outy <= sy + 7'd8;
         end
       4'd2: begin
-          outx = sx - 3;
-          outy = sy + 9;
+          outx <= sx - 7'd3;
+          outy <= sy + 7'd9;
         end
       4'd3: begin
-          outx = sx - 3;
-          outy = sy + 10;
+          outx <= sx - 7'd3;
+          outy <= sy + 7'd10;
         end
       4'd4: begin
-          outx = sx - 4;
-          outy = sy + 11;
+          outx <= sx - 7'd4;
+          outy <= sy + 7'd11;
         end
       4'd5: begin
-          outx = sx - 5;
-          outy = sy + 12;
+          outx <= sx - 7'd5;
+          outy <= sy + 7'd12;
         end
       4'd6: begin
-          outx = sx - 6;
-          outy = sy + 13;
+          outx <= sx - 7'd6;
+          outy <= sy + 7'd13;
         end
       4'd7: begin
-          outx = sx - 4;
-          outy = sy + 10;
+          outx <= sx - 7'd4;
+          outy <= sy + 7'd10;
         end
       4'd8: begin
-          outx = sx+4;
-          outy = sy + 6;
+          outx <= sx+4;
+          outy <= sy + 7'd6;
         end
       4'd9: begin
-          outx = sx+4;
-          outy = sy + 6;
+          outx <= sx+4;
+          outy <= sy + 7'd6;
         end
       4'd10: begin
-          outx = sx+4;
-          outy = sy + 6;
+          outx <= sx+4;
+          outy <= sy + 7'd6;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -461,68 +481,70 @@ module draw_box(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
       4'd1: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd2: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
       4'd5: begin
-          outx = sx + 2;
-          outy = sy;
+          outx <= sx + 7'd2;
+          outy <= sy;
         end
       4'd6: begin
-          outx = sx + 2;
-          outy = sy + 1;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd1;
         end
       4'd7: begin
-          outx = sx + 2;
-          outy = sy + 2;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd2;
         end
       4'd8: begin
-          outx = sx + 2;
-          outy = sy + 3;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd3;
         end
       4'd9: begin
-          outx = sx + 2;
-          outy = sy + 4;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd4;
         end
       4'd10: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
       4'd11: begin
-          outx = sx + 1;
-          outy = sy + 1;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd1;
         end
 		4'd12: begin
-          outx = sx + 1;
-          outy = sy + 2;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd2;
         end
 		4'd13: begin
-          outx = sx + 1;
-          outy = sy + 3;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd3;
         end
 		4'd14: begin
-          outx = sx + 1;
-          outy = sy + 4;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd4;
         end
-		  
-    endcase
-  
+		default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+	endcase
 endmodule
 
 
@@ -535,54 +557,58 @@ module draw_A(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
       4'd1: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd2: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
       4'd5: begin
-          outx = sx + 2;
-          outy = sy;
+          outx <= sx + 7'd2;
+          outy <= sy;
         end
       4'd6: begin
-          outx = sx + 2;
-          outy = sy + 1;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd1;
         end
       4'd7: begin
-          outx = sx + 2;
-          outy = sy + 2;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd2;
         end
       4'd8: begin
-          outx = sx + 2;
-          outy = sy + 3;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd3;
         end
       4'd9: begin
-          outx = sx + 2;
-          outy = sy + 4;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd4;
         end
       4'd10: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
       4'd11: begin
-          outx = sx + 1;
-          outy = sy + 2;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd2;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -594,46 +620,50 @@ module draw_B(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
       4'd1: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd2: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
       4'd5: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
       4'd6: begin
-          outx = sx + 1;
-          outy = sy + 2;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd2;
         end
       4'd7: begin
-          outx = sx + 1;
-          outy = sy + 4;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd4;
         end
       4'd8: begin
-          outx = sx + 2;
-          outy = sy + 1;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd1;
         end
       4'd9: begin
-          outx = sx + 2;
-          outy = sy + 3;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd3;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -645,34 +675,38 @@ module draw_C(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
       4'd1: begin
-          outx = sx + 2;
-          outy = sy + 1;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd1;
         end
       4'd2: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd5: begin
-          outx = sx + 1;
-          outy = sy + 4;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd4;
         end
       4'd6: begin
-          outx = sx + 2;
-          outy = sy + 4;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
   
 endmodule
 
@@ -684,48 +718,52 @@ module draw_D(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
       4'd1: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd2: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
       4'd5: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
       4'd6: begin
-          outx = sx + 1;
-          outy = sy + 4;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd4;
         end
         
       4'd8: begin
-          outx = sx + 2;
-          outy = sy + 1;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd1;
         end
       4'd9: begin
-          outx = sx + 2;
-          outy = sy + 2;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd2;
         end
       4'd10: begin
-          outx = sx + 2;
-          outy = sy + 3;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd3;
         end
       
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_E(sx, sy, counter,  outx, outy);
@@ -736,50 +774,54 @@ module draw_E(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
       4'd1: begin
-          outx = sx+1;
-          outy = sy;
+          outx <= sx+1;
+          outy <= sy;
         end
       4'd2: begin
-          outx = sx+2;
-          outy = sy;
+          outx <= sx+2;
+          outy <= sy;
         end
       4'd3: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
         end
       4'd4: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
       4'd5: begin
-          outx = sx + 1;
-          outy = sy + 2;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd2;
         end
       4'd6: begin
-          outx = sx + 2;
-          outy = sy + 2;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd2;
         end
       4'd7: begin
-          outx = sx;
-          outy = sy+3;
+          outx <= sx;
+          outy <= sy+3;
         end
       4'd8: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
       4'd9: begin
-          outx = sx + 1;
-          outy = sy + 4;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd4;
         end
       4'd10: begin
-          outx = sx + 2;
-          outy = sy + 4;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_F(sx, sy, counter,  outx, outy);
@@ -790,42 +832,46 @@ module draw_F(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx+1;
-        outy = sy;
+        outx <= sx+1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin 
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd7: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd8: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_G(sx, sy, counter,  outx, outy);
@@ -836,42 +882,46 @@ module draw_G(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_H(sx, sy, counter,  outx, outy);
@@ -882,50 +932,54 @@ module draw_H(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
     4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
-    endcase     
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase     
 endmodule
 
 module draw_I(sx, sy, counter,  outx, outy);
@@ -936,1321 +990,1487 @@ module draw_I(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx + 1;
-        outy = sy + 1;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 3;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd3;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd7: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd8: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_J(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-          outx = sx + 2;
-          outy = sy;
+          outx <= sx + 7'd2;
+          outy <= sy;
         end
     4'd1: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd6: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd7: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_K(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd8: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd9: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_L(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_M(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 1;
-        outy = sy + 1;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd1;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_N(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy + 1;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd5: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd10: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_O(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end    
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd10: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd11: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_P(sx, sy, counter, outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd7: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_Q(sx, sy, counter, outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy + 1;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 1;
-        outy = sy + 3;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd3;
         end
     4'd9: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_R(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_S(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd0: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd0: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd0: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd0: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd0: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd0: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_T(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx + 1;
-        outy = sy + 1;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 3;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd3;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_U(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
 
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_V(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_W(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 1;
-        outy = sy + 3;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd3;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_X(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd8: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end    
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_Y(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd7: begin
-        outx = sx + 1;
-        outy = sy + 3;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd3;
         end
     4'd8: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_Z(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd4: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 
 
 module draw_1(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx + 1;
-        outy = sy + 1;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd1;
         end
     4'd3: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx + 1;
-        outy = sy + 3;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd3;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx ;
-        outy = sy + 4;
+        outx <= sx ;
+        outy <= sy + 7'd4;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_2(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd3: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd5: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd6: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_3(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
      4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd7: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd8: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd9: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_4(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd3: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd8: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_5(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd8: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd9: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_6(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd6: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd8: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd9: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 2;
-        outy = sy + 4;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_7(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd6: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_8(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-          outx = sx;
-          outy = sy;
+          outx <= sx;
+          outy <= sy;
         end
     4'd1: begin
-          outx = sx;
-          outy = sy + 1;
+          outx <= sx;
+          outy <= sy + 7'd1;
        end
     4'd2: begin
-          outx = sx;
-          outy = sy + 2;
+          outx <= sx;
+          outy <= sy + 7'd2;
         end
     4'd3: begin
-          outx = sx;
-          outy = sy + 3;
+          outx <= sx;
+          outy <= sy + 7'd3;
         end
     4'd4: begin
-          outx = sx;
-          outy = sy + 4;
+          outx <= sx;
+          outy <= sy + 7'd4;
         end
     4'd5: begin
-          outx = sx + 2;
-          outy = sy;
+          outx <= sx + 7'd2;
+          outy <= sy;
         end
     4'd6: begin
-          outx = sx + 2;
-          outy = sy + 1;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd1;
         end
     4'd7: begin
-          outx = sx + 2;
-          outy = sy + 2;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd2;
         end
     4'd8: begin
-          outx = sx + 2;
-          outy = sy + 3;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd3;
         end
     4'd9: begin
-          outx = sx + 2;
-          outy = sy + 4;
+          outx <= sx + 7'd2;
+          outy <= sy + 7'd4;
         end
     4'd10: begin
-          outx = sx + 1;
-          outy = sy;
+          outx <= sx + 7'd1;
+          outy <= sy;
         end
     4'd11: begin
-          outx = sx + 1;
-          outy = sy + 2;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd2;
         end
     4'd11: begin
-          outx = sx + 1;
-          outy = sy + 4;
+          outx <= sx + 7'd1;
+          outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_9(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx;
-        outy = sy;
+        outx <= sx;
+        outy <= sy;
         end
     4'd1: begin
-        outx = sx + 1;
-        outy = sy;
+        outx <= sx + 7'd1;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd3: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd4: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
     4'd6: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd7: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd8: begin
-        outx = sx + 1;
-        outy = sy + 2;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd2;
         end
     4'd9: begin
-        outx = sx;
-        outy = sy + 4;
+        outx <= sx;
+        outy <= sy + 7'd4;
         end
     4'd10: begin
-        outx = sx + 1;
-        outy = sy + 4;
+        outx <= sx + 7'd1;
+        outy <= sy + 7'd4;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule
 
 module draw_0(sx, sy, counter,  outx, outy);
-  input sx, sy, counter;
-  output reg outx;
-  output reg outy;
+  input [6:0] sx, sy;
+  input [3:0] counter;
+  
+  output reg [6:0] outx;
+  output reg [6:0] outy;
   always @(counter)
     case (counter)
     4'd0: begin
-        outx = sx + 1;
+        outx <= sx + 7'd1;
         end
     4'd1: begin
-        outx = sx + 2;
-        outy = sy;
+        outx <= sx + 7'd2;
+        outy <= sy;
         end
     4'd2: begin
-        outx = sx;
-        outy = sy + 1;
+        outx <= sx;
+        outy <= sy + 7'd1;
         end
     4'd3: begin
-        outx = sx;
-        outy = sy + 2;
+        outx <= sx;
+        outy <= sy + 7'd2;
         end
     4'd4: begin
-        outx = sx;
-        outy = sy + 3;
+        outx <= sx;
+        outy <= sy + 7'd3;
         end
     4'd5: begin
-        outx = sx + 2;
-        outy = sy + 1;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd1;
         end
     4'd6: begin
-        outx = sx + 2;
-        outy = sy + 2;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd2;
         end
     4'd7: begin
-        outx = sx + 2;
-        outy = sy + 3;
+        outx <= sx + 7'd2;
+        outy <= sy + 7'd3;
         end
-    endcase
+    default: begin
+			outx <= 7'd0;
+			outy <= 7'd0;
+			end
+		endcase
 endmodule

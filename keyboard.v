@@ -131,7 +131,7 @@ module keyboard
                 if(scan_done_tick)                                                                // if scan code received
                 begin 
                     if(scan_out == CAPS)                                                          // if code is capslock, 
-                        caps_num_next = caps_num_reg - 1;                                         // decrement caps_num
+                        caps_num_next = caps_num_reg - 2'b01;                                         // decrement caps_num
                     else if(scan_out == BREAK)                                                    // else if code is break, go to ignore_caps_break state
                         state_next = ignore_caps_break;            
                     else if(scan_out != SHIFT1 && scan_out != SHIFT2)                             // else if code isn't a shift key
@@ -145,7 +145,7 @@ module keyboard
                 if(scan_done_tick)                                                                // if scan code received
                 begin
                     if(scan_out == CAPS)                                                          // if code is capslock
-                        caps_num_next = caps_num_reg - 1;                                         // decrement caps_num
+                        caps_num_next = caps_num_reg - 2'b01;                                         // decrement caps_num
                     state_next = capslock;                                                        // return to capslock state
                 end
             end
