@@ -165,73 +165,43 @@ module control(clock, resetn, done, key, goNextState, wins);
       VICTORY_WAIT = 5'd16,
       DEATH = 5'd17,
       DEATH_WAIT = 5'd18;
+		
 	always @(*)
 	begin: state_table // next state logic
 		case (cur_state)
-      //DRAW_SPLASH_SCREEN: begin
-			//		assign enable = 1'b1;
-			//		drawSplashScreen drawS(enable, clock, resetn, x, y, colour);
-			//		assign enable = 1'b0;
-			//		nxt_state <= DRAW_INIT;
-			//	end
-      DRAW_INIT: nxt_state = done ? LOAD_WORD : DRAW_INIT;
-			LOAD_WORD: begin
-          if(key == 8'h0A)
-            nxt_state <= LOAD_WORD_WAIT;
-          else
-            nxt_state <= LOAD_WORD;
-        end
-			LOAD_WORD_WAIT: begin
-          if(key == 8'h00)
-            nxt_state <= LOAD_WORD_DRAW;
-          else
-            nxt_state <= LOAD_WORD_WAIT;
-        end
-      LOAD_WORD_DRAW: begin
-          if(done && goNextState) // done drawing
-            nxt_state <= LOAD_WORD_DRAW;
-          else if(done) 
-            nxt_state <= LOAD_WORD;
-          else
-            nxt_state <= LOAD_WORD_DRAW;
-        end
-      SETUP:  nxt_state = done ? SETUP_WAIT : SETUP;
-      SETUP_WAIT: nxt_state = done ? GUESS_LETTER : SETUP_WAIT;
-      GUESS_LETTER: begin
-          if(key != 8'h00 ) // done drawing
-            nxt_state <= GUESS_LETTER_WAIT;
-          else 
-            nxt_state <= GUESS_LETTER;
-        end
-      GUESS_LETTER_WAIT: begin
-          if(key == 8'h00)
-            nxt_state <= CHECK_LETTER;
-          else
-            nxt_state <= GUESS_LETTER;
-        end
-      CHECK_LETTER: nxt_state = done ? CHECK_LETTER_DRAW : CHECK_LETTER;
-      CHECK_LETTER_DRAW: begin
-          if(done && goNextState) // done drawing
-            if(wins)
-              nxt_state <= VICTORY;
-            else
-              nxt_state <= DEATH;
-            
-          else if(done) 
-            nxt_state <= LOAD_WORD;
-          else
-            nxt_state <= LOAD_WORD_DRAW;
-        end
-      VICTORY: begin
-					nxt_state<= VICTORY_WAIT;
+			DRAW_INIT: nxt_state = done ? LOAD_WORD : DRAW_INIT;
+			LOAD_WORD: nxt_state = (key == 8'h0A) ? LOAD_WORD_WAIT : LOAD_WORD;
+			LOAD_WORD_WAIT: nxt_state = (key == 8'h00) ? LOAD_WORD_DRAW : LOAD_WORD_WAIT;
+			LOAD_WORD_DRAW: begin
+				if(done && goNextState) // done drawing
+					nxt_state <= LOAD_WORD_DRAW;
+				else if(done) 
+					nxt_state <= LOAD_WORD;
+				else
+					nxt_state <= LOAD_WORD_DRAW;
 				end
-			VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
-			DEATH: begin
+			SETUP:  nxt_state = done ? SETUP_WAIT : SETUP;
+			SETUP_WAIT: nxt_state = done ? GUESS_LETTER : SETUP_WAIT;
+			GUESS_LETTER: nxt_state = (key != 8'h00) ? GUESS_LETTER_WAIT : GUESS_LETTER;
+			GUESS_LETTER_WAIT: (key == 8'h00) ? CHECK_LETTER : GUESS_LETTER;
+			CHECK_LETTER: nxt_state = done ? CHECK_LETTER_DRAW : CHECK_LETTER;
+			CHECK_LETTER_DRAW: begin
+				 if(done && goNextState) // done drawing
+					if(wins)
+					  nxt_state <= VICTORY;
+					else
+					  nxt_state <= DEATH;
 					
-					nxt_state <= DEATH_WAIT;
-				end
+				 else if(done) 
+					nxt_state <= LOAD_WORD;
+				 else
+					nxt_state <= LOAD_WORD_DRAW;
+			  end
+			VICTORY: nxt_state = done ? VICTORY_WAIT : VICTORY;
+			VICTORY_WAIT: nxt_state = done ? DRAW_INIT : VICTORY;
+			DEATH: nxt_state = done ? DEATH_WAIT : DEATH;
 			DEATH_WAIT: nxt_state = done ? DRAW_INIT : DEATH;
-			  default: nxt_state = DRAW_INIT;
+			default: nxt_state = DRAW_INIT;
 		endcase
 	end
   
