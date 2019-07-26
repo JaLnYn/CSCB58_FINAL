@@ -300,11 +300,11 @@ module draw_arms(sx, sy, counter,  outx, outy);
   always @(counter)
     case (counter)
       4'd0: begin
-          outx <= sx-4;
+          outx <= sx-7'd4;
           outy <= sy + 7'd3;
         end
       4'd1: begin
-          outx <= sx-3;
+          outx <= sx-7'd3;
           outy <= sy + 7'd3;
         end
       4'd2: begin
@@ -324,15 +324,15 @@ module draw_arms(sx, sy, counter,  outx, outy);
           outy <= sy + 7'd3;
         end
       4'd6: begin
-          outx <= sx+2;
+          outx <= sx+7'd2;
           outy <= sy + 7'd3;
         end
       4'd7: begin
-          outx <= sx+3;
+          outx <= sx+7'd3;
           outy <= sy + 7'd3;
         end
       4'd8: begin
-          outx <= sx+4;
+          outx <= sx+7'd4;
           outy <= sy + 7'd3;
         end
     default: begin
@@ -454,15 +454,15 @@ module draw_rightleg(sx, sy, counter,  outx, outy);
           outy <= sy + 7'd10;
         end
       4'd8: begin
-          outx <= sx+4;
+          outx <= sx+7'd4;
           outy <= sy + 7'd6;
         end
       4'd9: begin
-          outx <= sx+4;
+          outx <= sx+7'd4;
           outy <= sy + 7'd6;
         end
       4'd10: begin
-          outx <= sx+4;
+          outx <= sx+7'd4;
           outy <= sy + 7'd6;
         end
     default: begin
@@ -778,11 +778,11 @@ module draw_E(sx, sy, counter,  outx, outy);
           outy <= sy;
         end
       4'd1: begin
-          outx <= sx+1;
+          outx <= sx+7'd1;
           outy <= sy;
         end
       4'd2: begin
-          outx <= sx+2;
+          outx <= sx+7'd2;
           outy <= sy;
         end
       4'd3: begin
@@ -803,7 +803,7 @@ module draw_E(sx, sy, counter,  outx, outy);
         end
       4'd7: begin
           outx <= sx;
-          outy <= sy+3;
+          outy <= sy+7'd3;
         end
       4'd8: begin
           outx <= sx;
@@ -836,7 +836,7 @@ module draw_F(sx, sy, counter,  outx, outy);
         outy <= sy;
         end
     4'd1: begin
-        outx <= sx+1;
+        outx <= sx+7'd1;
         outy <= sy;
         end
     4'd2: begin
@@ -1543,27 +1543,27 @@ module draw_S(sx, sy, counter,  outx, outy);
         outx <= sx + 7'd1;
         outy <= sy;
         end
-    4'd0: begin
+    4'd1: begin
         outx <= sx + 7'd2;
         outy <= sy;
         end
-    4'd0: begin
+    4'd2: begin
         outx <= sx;
         outy <= sy + 7'd1;
         end
-    4'd0: begin
+    4'd3: begin
         outx <= sx + 7'd1;
         outy <= sy + 7'd2;
         end
-    4'd0: begin
+    4'd4: begin
         outx <= sx + 7'd2;
         outy <= sy + 7'd3;
         end
-    4'd0: begin
+    4'd5: begin
         outx <= sx;
         outy <= sy + 7'd4;
         end
-    4'd0: begin
+    4'd6: begin
         outx <= sx + 7'd1;
         outy <= sy + 7'd4;
         end
