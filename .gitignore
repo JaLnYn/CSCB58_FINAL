@@ -43,3 +43,4 @@ greybox_tmp/
 *.sld
 *.qdf
 incremental_db/
+test/db
